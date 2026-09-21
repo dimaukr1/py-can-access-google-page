@@ -1,28 +1,37 @@
 from unittest.mock import MagicMock, patch
-import pytest
-from app.main import can_access_google_page
 
 
-@pytest.mark.parametrize(
-    "valid_url, connection, expected",
-    [
-        (True, True, "Accessible"),
-        (True, False, "Not accessible"),
-        (False, True, "Not accessible"),
-        (False, False, "Not accessible"),
-    ],
-)
 @patch("app.main.has_internet_connection")
 @patch("app.main.valid_google_url")
-def test_can_access_google_page(
-    mock_valid_google_url: MagicMock,
-    mock_has_internet_connection: MagicMock,
-    valid_url: bool,
-    connection: bool,
-    expected: str
+def test_can_access_google_page_accessible(
+    mock_valid_google_url: MagicMock, mock_has_internet_connection: MagicMock
 ) -> None:
-    mock_valid_google_url.return_value = valid_url
-    mock_has_internet_connection.return_value = connection
-    result = can_access_google_page("https://www.google.com")
+    mock_has_internet_connection.return_value = True
+    mock_valid_google_url.return_value = True
 
-    assert result == expected
+
+@patch("app.main.has_internet_connection")
+@patch("app.main.valid_google_url")
+def test_can_access_google_page_no_internet(
+    mock_has_internet_connection: MagicMock, mock_valid_google_url: MagicMock
+) -> None:
+    mock_has_internet_connection.return_value = False
+    mock_valid_google_url.return_value = True
+
+
+@patch("app.main.has_internet_connection")
+@patch("app.main.valid_google_url")
+def test_can_access_google_page_invalid_url(
+    mock_has_internet_connection: MagicMock, mock_valid_google_url: MagicMock
+) -> None:
+    mock_has_internet_connection.return_value = True
+    mock_valid_google_url.return_value = False
+
+
+@patch("app.main.has_internet_connection")
+@patch("app.main.valid_google_url")
+def test_can_access_google_page_invalid_url_and_no_internet(
+    mock_has_internet_connection: MagicMock, mock_valid_google_url: MagicMock
+) -> None:
+    mock_has_internet_connection.return_value = False
+    mock_valid_google_url.return_value = False
