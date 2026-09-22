@@ -13,8 +13,7 @@ def test_can_access_google_page_accessible(
 ) -> None:
     mock_has_internet_connection.return_value = True
     mock_valid_google_url.return_value = True
-    result = can_access_google_page(url)
-    assert result == "Accessible"
+    assert can_access_google_page(url) == "Accessible"
 
 
 @pytest.mark.parametrize("url", ["https://google.com",
@@ -27,8 +26,7 @@ def test_can_access_google_page_no_internet(
 ) -> None:
     mock_has_internet_connection.return_value = False
     mock_valid_google_url.return_value = True
-    result = can_access_google_page(url)
-    assert result == "Not accessible"
+    assert can_access_google_page(url) == "Accessible"
 
 
 @pytest.mark.parametrize("url", ["https://google.com",
@@ -41,8 +39,7 @@ def test_can_access_google_page_invalid_url(
 ) -> None:
     mock_has_internet_connection.return_value = True
     mock_valid_google_url.return_value = False
-    result = can_access_google_page(url)
-    assert result == "Not accessible"
+    assert can_access_google_page(url) == "Accessible"
 
 
 @pytest.mark.parametrize("url", ["https://google.com",
@@ -55,5 +52,4 @@ def test_can_access_google_page_invalid_url_and_no_internet(
 ) -> None:
     mock_has_internet_connection.return_value = False
     mock_valid_google_url.return_value = False
-    result = can_access_google_page(url)
-    assert result == "Not accessible"
+    assert can_access_google_page(url) == "Accessible"
