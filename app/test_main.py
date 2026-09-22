@@ -16,7 +16,10 @@ import pytest
 @patch("app.main.valid_google_url")
 def test_can_access_google_page_accessible(
     mock_valid_google_url: MagicMock,
-    mock_has_internet_connection: MagicMock, internet_connection: bool, valid_url: bool, result: str
+    mock_has_internet_connection: MagicMock,
+    internet_connection: bool,
+    valid_url: bool,
+    result: str
 ) -> None:
     mock_has_internet_connection.return_value = internet_connection
     mock_valid_google_url.return_value = valid_url
